@@ -1,0 +1,366 @@
+{
+    "info": {
+        "name": "Shodan CVE Scraper API",
+        "description": "Collection of API endpoints for the Shodan CVE Scraper",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health & Info",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/health",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "health"
+                            ]
+                        },
+                        "description": "Check if the API is running"
+                    }
+                },
+                {
+                    "name": "Get API Info",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/info",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "info"
+                            ]
+                        },
+                        "description": "Get Shodan API information (credits, plan, etc.)"
+                    }
+                },
+                {
+                    "name": "API Documentation",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                ""
+                            ]
+                        },
+                        "description": "Get interactive API documentation"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "CVE Search",
+            "item": [
+                {
+                    "name": "Search by CVE",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2021-44228?page=1&limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2021-44228"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Results per page (max 100)"
+                                },
+                                {
+                                    "key": "facets",
+                                    "value": "org,country,port",
+                                    "description": "Comma-separated facets",
+                                    "disabled": true
+                                }
+                            ]
+                        },
+                        "description": "Search for hosts affected by a specific CVE"
+                    }
+                },
+                {
+                    "name": "Get CVE Count",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2021-44228/count?facets=country,org,port",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2021-44228",
+                                "count"
+                            ],
+                            "query": [
+                                {
+                                    "key": "facets",
+                                    "value": "country,org,port",
+                                    "description": "Comma-separated facets"
+                                }
+                            ]
+                        },
+                        "description": "Get count of hosts affected by a CVE with facet data"
+                    }
+                },
+                {
+                    "name": "Get Affected Components",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2021-44228/components",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2021-44228",
+                                "components"
+                            ]
+                        },
+                        "description": "Get all components affected by a specific CVE"
+                    }
+                },
+                {
+                    "name": "Get Affected Services",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2021-44228/services",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2021-44228",
+                                "services"
+                            ]
+                        },
+                        "description": "Get all services affected by a specific CVE"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Component Search",
+            "item": [
+                {
+                    "name": "Search by Component",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/component/Apache?page=1&limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "component",
+                                "Apache"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Results per page"
+                                },
+                                {
+                                    "key": "cve",
+                                    "value": "CVE-2021-44228",
+                                    "description": "Filter by specific CVE",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "facets",
+                                    "value": "version,port",
+                                    "description": "Comma-separated facets",
+                                    "disabled": true
+                                }
+                            ]
+                        },
+                        "description": "Search for a specific component/product"
+                    }
+                },
+                {
+                    "name": "Get Vulnerable Component Instances",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/component/Apache/vulnerable?page=1&limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "component",
+                                "Apache",
+                                "vulnerable"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Search for vulnerable instances of a component"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Example CVEs",
+            "item": [
+                {
+                    "name": "Log4Shell (CVE-2021-44228)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2021-44228?limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2021-44228"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Apache Log4j Remote Code Execution"
+                    }
+                },
+                {
+                    "name": "Spring4Shell (CVE-2022-22965)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2022-22965?limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2022-22965"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Spring Framework RCE"
+                    }
+                },
+                {
+                    "name": "Heartbleed (CVE-2014-0160)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2014-0160?limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2014-0160"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "OpenSSL Heartbleed vulnerability"
+                    }
+                },
+                {
+                    "name": "ProxyLogon (CVE-2021-26855)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/cve/CVE-2021-26855?limit=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "cve",
+                                "CVE-2021-26855"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Microsoft Exchange Server SSRF"
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000",
+            "type": "string"
+        }
+    ]
+}
