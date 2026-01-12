@@ -54,38 +54,6 @@ interface ThreatMapProps {
   onCountryClick?: (geo: any) => void;
 }
 
-const Geo = React.memo(({ geo, fillColor, onCountryClick, setHoveredCountry }: any) => {
-    return (
-        <Geography
-            key={geo.rsmKey}
-            geography={geo}
-            fill={fillColor}
-            stroke="#1E293B"
-            strokeWidth={0.5}
-            onClick={() => onCountryClick && onCountryClick(geo.properties)}
-            onMouseEnter={() => {
-                const geoName = geo.properties.name || geo.properties.NAME || "Unknown";
-                setHoveredCountry(geoName, geo.properties.ISO_A2);
-            }}
-            onMouseLeave={() => setHoveredCountry(null)}
-            style={{
-                default: { outline: "none" },
-                hover: { fill: "#3b82f6", outline: "none", cursor: "pointer" },
-                pressed: { outline: "none" },
-            }}
-        />
-    );
-}, (prev, next) => {
-  // Only re-render if fill color changes (highlight data)
-  // Note: react-simple-maps handles projection changes internally via context, 
-  // so we must be careful. If this memo prevents projection updates, the map will look broken during rotation.
-  // Actually, react-simple-maps passes 'projection' as context. If context changes, memo-ed component re-renders?
-  // No, memo blocks usage of props. But Context? 
-  // Let's rely on reducing the prop churn first.
-  return prev.fillColor === next.fillColor;
-});
-
-
 const ThreatMap: React.FC<ThreatMapProps> = ({ attacks, highlightData, onCountryClick }) => {
   // Pre-calculate stats map to avoid O(N*M) in render loop
   const countryStats = React.useMemo(() => {
@@ -142,6 +110,8 @@ const ThreatMap: React.FC<ThreatMapProps> = ({ attacks, highlightData, onCountry
   const handlePointerDown = (e: React.PointerEvent) => {
     if (e.button === 0 || e.button === 2) {
         isDragging.current = true;
+        // Hide tooltip immediately when dragging starts to prevent flickering
+        if (tooltipRef.current) tooltipRef.current.style.opacity = '0';
         lastPos.current = { x: e.clientX, y: e.clientY };
         e.currentTarget.setPointerCapture(e.pointerId);
     }
@@ -225,6 +195,9 @@ const ThreatMap: React.FC<ThreatMapProps> = ({ attacks, highlightData, onCountry
                 
                 // Optimized Hover Handler - Direct DOM manipulation
                 const handleEnter = () => {
+                     // Do not show tooltip if dragging/rotating
+                     if (isDragging.current) return;
+
                      const stats = countryStats[countryCode] || { incoming: 0, outgoing: 0 };
                      hoveredCountryRef.current = { name: geoName, incoming: stats.incoming, outgoing: stats.outgoing };
 
