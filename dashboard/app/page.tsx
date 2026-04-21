@@ -212,16 +212,22 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col h-screen w-full bg-[#020617] text-gray-200">
       {/* Header */}
-      <header className="h-16 border-b border-gray-800 flex items-center justify-between px-6 bg-[#050B14]">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-            <Globe className="text-white" size={20} />
+      <header className="h-16 border-b border-cyan-900/30 flex items-center justify-between px-6 bg-[#030712] shadow-[0_0_15px_rgba(6,182,212,0.05)] z-20 relative">
+        <div className="flex items-center gap-4">
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-b from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+            <Globe className="text-cyan-400" size={22} />
+            <div className="absolute inset-0 rounded-lg animate-[pulse_4s_ease-in-out_infinite] ring-1 ring-cyan-400/50"></div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-wide">Helios</h1>
-            <p className="text-[10px] text-gray-400 uppercase tracking-widest">
-                Live Global Monitor
-            </p>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-wider font-mono">
+              HELIOS
+            </h1>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_5px_rgba(239,68,68,0.8)]"></span>
+              <p className="text-[9px] text-cyan-500/70 font-mono uppercase tracking-[0.2em] font-semibold">
+                  Live Global Monitor
+              </p>
+            </div>
           </div>
         </div>
         
